@@ -2,6 +2,7 @@ package domain.marca;
 
 import domain.marca.RequestBody.RequestBodyPostMarca;
 import domain.marca.RequestBody.RequestBodyUpdateMarca;
+import domain.modelo.Modelo;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -20,15 +21,21 @@ public class MarcaController {
     private final MarcaService marcaService;
 
     @GetMapping
-    public ResponseEntity<List<Marca>> listAll(){
+    public ResponseEntity<List<Marca>> listAll() {
         return ResponseEntity.ok(marcaService.listAll());
     }
 
+    @GetMapping(path = "/marcaNome/{nome}")
+    public ResponseEntity<List<Marca>> findByNome(@PathVariable String nome) {
+        List<Marca> marca = marcaService.findAllThatConatinsName(nome);
+        return ResponseEntity.ok(marca);
+    }
+
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Marca> findMarca(@PathVariable Long id){
+    public ResponseEntity<Marca> findMarca(@PathVariable Long id) {
         Optional<Marca> marca = marcaService.findById(id);
 
-        if (marca.isPresent()){
+        if (marca.isPresent()) {
             return ResponseEntity.ok(marca.get());
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -36,14 +43,14 @@ public class MarcaController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> deleteMarca(@PathVariable Long id){
+    public ResponseEntity<Void> deleteMarca(@PathVariable Long id) {
         marcaService.deleteMarca(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping()
-    public ResponseEntity<Marca> updateMarca(@RequestBody RequestBodyUpdateMarca requestBodyUpdateMarca){
+    public ResponseEntity<Marca> updateMarca(@Valid @RequestBody RequestBodyUpdateMarca requestBodyUpdateMarca) {
         Marca marcaAtualizada = marcaService.updateMarca(requestBodyUpdateMarca);
 
         return ResponseEntity.ok(marcaAtualizada);
@@ -51,7 +58,7 @@ public class MarcaController {
     }
 
     @PostMapping()
-    public ResponseEntity<Marca> createMarca(@Valid @RequestBody RequestBodyPostMarca requestBodyPostMarca){
+    public ResponseEntity<Marca> createMarca(@Valid @RequestBody RequestBodyPostMarca requestBodyPostMarca) {
         Marca marcaNova = marcaService.createMarca(requestBodyPostMarca);
         return ResponseEntity.status(HttpStatus.CREATED).body(marcaNova);
     }

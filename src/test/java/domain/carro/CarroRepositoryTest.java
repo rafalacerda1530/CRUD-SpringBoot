@@ -1,13 +1,10 @@
 package domain.carro;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 import util.CarroCreator;
 
 import java.util.Optional;
@@ -15,17 +12,17 @@ import java.util.Optional;
 @DataJpaTest
 @DisplayName("Test Carro")
 public class CarroRepositoryTest {
-
+    
     @Autowired
     private CarroRepository carroRepository;
 
     @Test
     @DisplayName("Test save Carro")
     public void testSaveCarro() {
+
         Carro carro = CarroCreator.createCarroTobeSaved();
 
         Carro savedCarro = carroRepository.save(carro);
-
         Assertions.assertThat(savedCarro).isNotNull();
         Assertions.assertThat(savedCarro.getId()).isNotNull();
         Assertions.assertThat(savedCarro.getTimestamp_cadastro()).isEqualTo(carro.getTimestamp_cadastro());

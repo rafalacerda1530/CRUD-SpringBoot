@@ -12,6 +12,7 @@ public abstract class MarcaMapper {
     public static final MarcaMapper INSTANCE = Mappers.getMapper(MarcaMapper.class);
 
     public abstract Marca toMarca(RequestBodyPostMarca requestPostMarca);
+
     public abstract void UpdateMarcaFromDto(RequestBodyUpdateMarca requestBodyUpdateMarca, @MappingTarget Marca marca);
 
 }

@@ -6,12 +6,12 @@ import domain.carro.mapper.CarroMapper;
 import domain.exceptions.ResourceNotFoundException;
 import domain.modelo.Modelo;
 import domain.modelo.ModeloRepository;
-import domain.modelo.ModeloService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +21,22 @@ public class CarroService {
 
     public List<Carro> listAll() {
         return carroRepository.findAll();
+    }
+
+    public List<Carro> findAllThatConatinsName(String name) {
+        List<Carro> carros = listAll();
+
+        if (carros == null || carros.isEmpty()) {
+            throw new ResourceNotFoundException("Nenhum veiculo cadastrado.");
+        }
+
+        return carros.stream()
+                .filter(carro -> carro.getModelo().getNome().toLowerCase().contains(name.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Carro> findCarByModeloNome(String nome) {
+        return carroRepository.findCarByModeloNome(nome);
     }
 
     public Carro save(Carro carro) {
@@ -41,24 +57,34 @@ public class CarroService {
 
     public Carro update(RequestBodyUpdateCarro requestBodyUpdateCarro) {
         Carro carro = carroRepository.findById(requestBodyUpdateCarro.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Não foi possível localizar o id: " + requestBodyUpdateCarro.getId()));
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Não foi possível localizar o id: " + requestBodyUpdateCarro.getId()));
+
+        Modelo modelo = modeloRepository.findBynome(requestBodyUpdateCarro.getNomeModelo());
+        if (modelo == null) {
+            throw new ResourceNotFoundException("MODELO " + requestBodyUpdateCarro.getNomeModelo() + " NÃO LOCALIZADO");
+        }
 
         CarroMapper.INSTANCE.updateCarroFromDto(requestBodyUpdateCarro, carro);
+        carro.setModelo(modelo);
 
-        return  carroRepository.save(carro);
+        return carroRepository.save(carro);
 
     }
 
-    public Carro createCarro(RequestBodyPostCarro requestBodyPostCarro){
+    public Carro createCarro(RequestBodyPostCarro requestBodyPostCarro) {
 
-        Modelo modelo = modeloRepository.findById(requestBodyPostCarro.getIdModelo())
-                .orElseThrow(() -> new ResourceNotFoundException("ID NMODELO NÃO LOCALIZADO"));
+        Modelo modelo = modeloRepository.findBynome(requestBodyPostCarro.getNomeModelo());
+
+        if (modelo == null) {
+            throw new ResourceNotFoundException("MODELO " + requestBodyPostCarro.getNomeModelo() + " NÃO LOCALIZADO");
+        }
 
         Carro carro = CarroMapper.INSTANCE.toCarro(requestBodyPostCarro);
         carro.setTimestamp_cadastro(LocalDateTime.now());
         carro.setModelo(modelo);
 
-        return  carroRepository.save(carro);
+        return carroRepository.save(carro);
     }
 
 }

@@ -22,20 +22,4 @@ class CarroControllerTest {
     private CarroController carroController;
     @Mock
     private  CarroService carroServiceMock;
-
-    @BeforeEach
-    void setup(){
-        List<Carro> carroPage =  List.of(CarroCreator.createCarroValid()))
-        BDDMockito.when(carroServiceMock.listAll())
-                .thenReturn(carroPage);
-    }
-    
-    @Test
-    @DisplayName("Retorno das listas de carro")
-    void testReturnListOdCarros(){
-        String expectedName = CarroCreator.createCarroValid().getAno();
-        
-        List<Carro> carroList = carroController.listaAll().getBody();
-
-    }
 }

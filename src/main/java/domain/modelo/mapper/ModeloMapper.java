@@ -13,5 +13,7 @@ public abstract class ModeloMapper {
     public static final ModeloMapper INSTANCE = Mappers.getMapper(ModeloMapper.class);
 
     public abstract Modelo toModelo(RequestBodyPostModelo requestBodyPostModelo);
-    public abstract void updateModeloFromDto(RequestBodyUpdateModelo requestBodyUpdateModelo, @MappingTarget Modelo modelo);
+
+    public abstract void updateModeloFromDto(RequestBodyUpdateModelo requestBodyUpdateModelo,
+            @MappingTarget Modelo modelo);
 }

@@ -6,12 +6,10 @@ import lombok.Data;
 
 @Data
 public class RequestBodyUpdateMarca {
-
-    @NotEmpty (message = "ID Não pode ser nulo ou vazio")
-    @NotNull
+    @NotNull(message = "ID Não pode ser nulo ou vazio")
     private Long id;
 
-    @NotEmpty (message = "nome_marca Não pode ser nulo ou vazio")
+    @NotEmpty(message = "nome_marca Não pode ser nulo ou vazio")
     @NotNull
     private String nomeMarca;
 }

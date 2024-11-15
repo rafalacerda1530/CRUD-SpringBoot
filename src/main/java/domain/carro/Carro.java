@@ -1,5 +1,6 @@
 package domain.carro;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import domain.modelo.Modelo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -35,6 +36,7 @@ public class Carro {
     private String cor;
 
     @ManyToOne
-    @JoinColumn(name = "modelo_id")
+    @JoinColumn(name = "modelo_id", nullable = false)
+    @JsonManagedReference
     private Modelo modelo;
 }
