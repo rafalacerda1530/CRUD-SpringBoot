@@ -5,7 +5,7 @@ para iniciar:
 acessar diretrório react-front:
    - npm start
 - Iniciar via vscode:
-  ApplicationStart.java
+  - ApplicationStart.java
 
 Desenvolvimento de uma aplicação Spring Boot com acesso a banco de dados e exposição de endpoints REST
 
