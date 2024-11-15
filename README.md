@@ -4,7 +4,7 @@ para iniciar:
  - docker-compose up
 acessar diretrório react-front:
    - npm start
-Iniciar via vscode:
+- Iniciar via vscode:
   ApplicationStart.java
 
 Desenvolvimento de uma aplicação Spring Boot com acesso a banco de dados e exposição de endpoints REST
