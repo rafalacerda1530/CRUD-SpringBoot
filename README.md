@@ -1,6 +1,6 @@
 ![image](https://github.com/user-attachments/assets/8446a5d8-c63e-4733-a8a6-3105b0d3e0b6)
 
-- para iniciar:
+para iniciar:
  - docker-compose up
 acessar diretrório react-front:
    - npm start
