@@ -19,8 +19,6 @@ Utilizei o H2 como banco de dados em ambiente de desenvolvimento, mas o código 
 Endpoints REST:
 
 Criei endpoints para CRUD de Carros, Marcas e Modelos. A ideia é permitir a interação fácil entre o backend e o frontend, com os dados sendo entregues em formato JSON.
-Um dos endpoints importantes é o que entrega a listagem de modelos de carros, com o seguinte formato esperado:
-https://wswork.com.br/cars.json.
 
 A estrutura de pacotes é organizada em três camadas: Controller, Service e Repository.
 Controllers lidam com as requisições HTTP.
